@@ -1,0 +1,27 @@
+{
+	"manifest_version": 3,
+	"name": "askpls",
+	"description": "Prompt you on a per-site basis for cookies",
+	"version": "1.0",
+	"action": {
+		"default_popup": "popup.html"
+	},
+	"content_scripts": [
+		{
+			"js": ["per-site.js"],
+			"matches": ["https://*/*"]
+		}
+	],
+	"permissions": [
+		"tabs",
+		"cookies",
+		"contentSettings"
+	],
+	"host_permissions": ["<all_urls>"],
+	"icons": {
+		"16": "images/icon16.png",
+		"32": "images/icon32.png",
+		"64": "images/icon64.png",
+		"128": "images/icon128.png"
+	}
+}
