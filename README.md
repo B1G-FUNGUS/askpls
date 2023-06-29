@@ -30,6 +30,8 @@ software is pending to be licensed.
 
 - script to update & regex suffix list
 
+- add options page for configurability
+
 # Known Issues
 
 - will not work with http sites, or any protocol but https
