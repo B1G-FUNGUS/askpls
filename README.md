@@ -16,26 +16,29 @@ software is pending to be licensed.
 - Add auto-refresh to options page
 
 - Resetting settings for individual sites in options & popup
- - This is not currently possible without lots of janky code; the Chrome API
-   does not have an option to unset a content setting, only to delete all
-   content settings set by the extension. This leaves a few possible solutions
-   which do not look promising:
-  1. Record the url AND setting each time a new setting is created, and then,
-     whenever a setting is removed, clear ALL settings, and then re-add all of the
-     settings that weren't changed. Not a massive deal since we already do that
-     for recording a new url, but still inconvenient.
-  2. Try and manipulate the files containing the whitelists/blacklists
-     themselves, although it is kind of silly for our extension to go this far.
-     Still, it would also make it so we don't have to record our set urls
-     separately (so no risk of anything getting out of sync).
- - For now the 'default' option is just going to be ignored, in the grand
-   scheme of things it doesn't make *that* much sense, considering everything
-   should be on a per-site basis. Regardless, sorting it out sooner will
-   prevent us from having to rework a lot of code later.
+	- This is not currently possible without lots of janky code; the Chrome
+	  API does not have an option to unset a content setting, only to
+	  delete all content settings set by the extension. This leaves a few
+	  possible solutions which do not look promising:
+		1. Record the url AND setting each time a new setting is
+		created, and then, whenever a setting is removed, clear ALL
+		settings, and then re-add all of the settings that weren't
+		changed. Not a massive deal since we already do that for
+		recording a new url, but still inconvenient.
+		2. Try and manipulate the files containing the
+		whitelists/blacklists themselves, although it is kind of silly
+		for our extension to go this far.  Still, it would also make it
+		so we don't have to record our set urls separately (so no risk
+		of anything getting out of sync).
+	- For now the 'default' option is just going to be ignored, in the
+	  grand scheme of things it doesn't make *that* much sense, considering
+	  everything should be on a per-site basis. Regardless, sorting it out
+	  sooner will prevent us from having to rework a lot of code later.
 
-- Path to 1.0
- - Resolve the 'default' issue, even if it is just setting future plans in stone
- - Detect cookies set by tabs in the background
+- Path to 1.0:
+	1. Resolve the 'default' issue, even if it is just setting future plans
+	  in stone
+	2. Detect cookies set by tabs in the background
 
 - Add 48x48 icon?
 
@@ -47,7 +50,7 @@ software is pending to be licensed.
 
 - Remove singe-level suffixes from the list? (technically improves
   speed/storage, but those resources are barely used as is)
- - Add IP addr pattern match
+	- Add IP addr pattern match
 
 - Script to update & compile regex suffix list
 
