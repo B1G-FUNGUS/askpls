@@ -16,11 +16,16 @@ async function popup() {
 		setting = this.id;
 		setSetting(url, setting);
 	}
+	function reset() {
+		// document.getElementById(setting).disabled = false;
+	}
 	let allowB = document.getElementById("allow");
 	let blockB = document.getElementById("block");
 	let deleteB = document.getElementById("session_only");
+	let defaultB = document.getElementById("default");
 	allowB.addEventListener("mouseup", bupdate);
 	blockB.addEventListener("mouseup", bupdate);
 	deleteB.addEventListener("mouseup", bupdate);
+	defaultB.addEventListener("mouseup", reset);
 }
 popup();

@@ -13,33 +13,53 @@ software is pending to be licensed.
 
 # TODO
 
-- the actual per-site part of the program will probably come in next commit
+- Add auto-refresh to options page
 
-- add 48x48 icon? remove 64?
+- Resetting settings for individual sites in options & popup
+ - This is not currently possible without lots of janky code; the Chrome API
+   does not have an option to unset a content setting, only to delete all
+   content settings set by the extension. This leaves a few possible solutions
+   which do not look promising:
+  1. Record the url AND setting each time a new setting is created, and then,
+     whenever a setting is removed, clear ALL settings, and then re-add all of the
+     settings that weren't changed. Not a massive deal since we already do that
+     for recording a new url, but still inconvenient.
+  2. Try and manipulate the files containing the whitelists/blacklists
+     themselves, although it is kind of silly for our extension to go this far.
+     Still, it would also make it so we don't have to record our set urls
+     separately (so no risk of anything getting out of sync).
+ - For now the 'default' option is just going to be ignored, in the grand
+   scheme of things it doesn't make *that* much sense, considering everything
+   should be on a per-site basis. Regardless, sorting it out sooner will
+   prevent us from having to rework a lot of code later.
 
-- add license
+- Path to 1.0
+ - Resolve the 'default' issue, even if it is just setting future plans in stone
+ - Add per-site prompt
 
-- add regular http match?
+- Add 48x48 icon? remove 64?
 
-- keep suffix list always loaded
+- Add license
 
-- remove singe-level suffixes from the list (might mess with ip address hosts,
-  but then you could just check for an ipv4/ipv6 style pattern)
+- Add regular http match
 
-- catch failure to match
+- Add a better read/write system to storage/settings?
 
-- script to update & regex suffix list
+- Remove singe-level suffixes from the list? (technically improves
+  speed/storage, but those resources are barely used as is)
+ - Add IP addr pattern match
 
-- add options page for configurability
+- Script to update & compile regex suffix list
+
+- Fix trivial errors that don't interfere with the goal but still cause weird
+  behavior
 
 # Known Issues
 
-- will not work with http sites, or any protocol but https
+- Will not work with http sites, or any protocol but https
 
-- this program can't create OR remove whitelists/blacklists that are specific
+- This program can't create OR remove whitelists/blacklists that are specific
   to subdomains, so if you have a pre-existing cookie filters with subdomains
   there will be some minor issues
 
-- no 'default' option, TODO add later?
-
-- you can't change whitelists/blaclists set by the extension
+- You can't change whitelists/blaclists set by the extension

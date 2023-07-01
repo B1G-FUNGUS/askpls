@@ -1,0 +1,14 @@
+h1 {
+	text-align: center;
+	margin-top: -0.2em;
+	margin-bottom: 0.2em;
+}
+button { 
+	min-width: 90%;
+	font-size: 175%;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+body {
+	min-width: 12em;
+}
