@@ -1,3 +1,5 @@
+// TODO lol this causes real issues now (since there is no initial element,
+// setlist is not recognized as an array! :D) will fix l8er
 async function reset() {
 	// awaits may not be necessary in the future, but they were in testing
 	await chrome.contentSettings.cookies.clear({});	

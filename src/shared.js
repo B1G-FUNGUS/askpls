@@ -5,6 +5,8 @@ async function getList() {
 	return new RegExp(text.substring(0,text.length-1));
 }
 async function getHost() {
+	// TODO lol chrome treats the console as a tab. This will not be a problem
+	// in the future, but for now avoid focusing on it when developing!
 	let [tab] = await chrome.tabs.query({active: true, lastFocusedWindow: true});
 	let host = new URL(tab.url).hostname;
 	return host;

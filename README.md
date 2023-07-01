@@ -35,9 +35,9 @@ software is pending to be licensed.
 
 - Path to 1.0
  - Resolve the 'default' issue, even if it is just setting future plans in stone
- - Add per-site prompt
+ - Detect cookies set by tabs in the background
 
-- Add 48x48 icon? remove 64?
+- Add 48x48 icon?
 
 - Add license
 
@@ -56,6 +56,9 @@ software is pending to be licensed.
 
 # Known Issues
 
+- Will currently not detect cookies set by sites in the background (**this is
+  very bad!** Circumvents the entire point of the program!!)
+
 - Will not work with http sites, or any protocol but https
 
 - This program can't create OR remove whitelists/blacklists that are specific
@@ -63,3 +66,5 @@ software is pending to be licensed.
   there will be some minor issues
 
 - You can't change whitelists/blaclists set by the extension
+
+- Plenty of unhandled exceptions :D
