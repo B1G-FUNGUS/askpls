@@ -1,13 +1,20 @@
-// TODO lol this causes real issues now (since there is no initial element,
-// setlist is not recognized as an array! :D) will fix l8er
-async function reset() {
-	// awaits may not be necessary in the future, but they were in testing
-	await chrome.contentSettings.cookies.clear({});	
-	await chrome.storage.local.clear();
+function refresh() {
+	let allows = document.getElementById("allow");
+	let deletes = document.getElementById("session_only");
+	let blocks = document.getElementById("block");
+	policies = await chrome.storage.local.get(["allow", "session_only", 
+		"block"]);
+	policies.allow.map(domain => allows.innerHTML += domain + "<br>");
+	policies.session_only.map(domain => deletes.innerHTML += domain + "<br>");
+	policies.block.map(domain => blocks.innerHTML += domain + "<br>");
 }
-/*async function test() {
-	chrome.storage.local.set({set: ["a","b","c"]});
-}*/
+
+document.getElementById("reset").addEventListener(async () => {
+	chrome.contentSettings.cookies.clear({});
+	await initStorage();
+	refresh();
+}
+
 async function listSets() {
 	let urls = document.getElementById("urls");
 	let setlist = await getStored();

@@ -11,7 +11,11 @@ https://github.com/publicsuffix/list, and is licensed under the Mozilla Public
 License Version 2.0, which can be found in 'LIST_LICENSE.txt.' The rest of this
 software is pending to be licensed.
 
+# Changelog 
+
 # TODO
+
+- Add badge indicating cookie policy on a site?
 
 - Add auto-refresh to options page
 
@@ -57,6 +61,8 @@ software is pending to be licensed.
 - Fix trivial errors that don't interfere with the goal but still cause weird
   behavior
 
+- Figure out a better way to do `makeObject()`
+
 # Known Issues
 
 - Will currently not detect cookies set by sites in the background (**this is
@@ -70,4 +76,13 @@ software is pending to be licensed.
 
 - You can't change whitelists/blaclists set by the extension
 
-- Plenty of unhandled exceptions :D
+- Plenty of unhandled exceptions :D (not as much anymore)
+
+- cookie being already set issues:
+ - you should clear all your cookies before using this extension b/c otherwise it
+prompts you only when new cookies are set
+ - what if a cookie is set by a domain in a background tab, but then the user closes the browser before you set a policy? the wait-list was in memory, so you will not get a prompt when you go to that tab with that domain next time
+  - this is not a problem if your default policy is "session only," because cookies for domains with unset policies will be deleted on close
+
+- Might have to run openPopup() inside action events only? but sometimes it
+  works when it's not within an action event?? but sometimes not? idk tired

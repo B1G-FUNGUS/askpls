@@ -1,0 +1,12 @@
+figure out a better way to do the `makeObject()` method
+
+weird error msg: `Uncaught (in promise) Error: Could not find an active browser
+window.` at background.js:1/background.js:0
+ - assumed this has to do with getActiveRoot(), but it actually happens after
+   openPopup(), so it might be that
+
+cookie being already set issues:
+- you should clear all your cookies before using this extension b/c otherwise it
+prompts you only when new cookies are set
+- what if a cookie is set by a domain in a background tab, but then the user closes the browser before you set a policy? the wait-list was in memory, so you will not get a prompt when you go to that tab with that domain next time
+  - this is not a problem if your default policy is "session only," because cookies for domains with unset policies will be deleted on close

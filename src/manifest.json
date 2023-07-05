@@ -10,17 +10,10 @@
 		"default_popup": "popup.html"
 	},
 	"options_page": "options.html",
-	"content_scripts": [
-		{
-			"js": ["per-site.js"],
-			"matches": ["https://*/*"]
-		}
-	],
 	"permissions": [
 		"tabs",
 		"cookies",
 		"contentSettings",
-		"notifications",
 		"storage"
 	],
 	"host_permissions": ["<all_urls>"],
