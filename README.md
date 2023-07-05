@@ -24,7 +24,7 @@ software is pending to be licensed.
 	  API does not have an option to unset a content setting, only to
 	  delete all content settings set by the extension. This leaves a few
 	  possible solutions which do not look promising:
-		1. Record the url AND setting each time a new setting is
+		1. **CHOSEN:** Record the url AND setting each time a new setting is
 		created, and then, whenever a setting is removed, clear ALL
 		settings, and then re-add all of the settings that weren't
 		changed. Not a massive deal since we already do that for
@@ -40,9 +40,7 @@ software is pending to be licensed.
 	  sooner will prevent us from having to rework a lot of code later.
 
 - Path to 1.0:
-	1. Resolve the 'default' issue, even if it is just setting future plans
-	  in stone
-	2. Detect cookies set by tabs in the background
+	1. Squash bugs and get program working normally
 
 - Add 48x48 icon?
 
