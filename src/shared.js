@@ -1,11 +1,12 @@
+// inits/resets the storage
 async function initStorage() {
 	// Need to await so we don't do anything before storage is initialized (?)
 	// TODO I don't think adding a string to each array is necessary, but I get
 	// errors in getPolicy about the arrays being undefined otherwise
-	await chrome.storage.local.set({allow: ["empty"], session_only: ["empty"], 
-		block: ["empty"]});
+	await chrome.storage.local.set({allow: [], session_only: [], block: []});
 }
 
+// get's the current policy of a domain
 async function getPolicy(domain) {
 	let policies = await chrome.storage.local.get(["allow", "session_only",
 		"block"]);
@@ -15,8 +16,9 @@ async function getPolicy(domain) {
 	return null;
 }
 
+// apply's a policy by setting it in the chrome settings
 async function applyPolicy(domain, policy) {
-	console.log("Adding policy");
+	// console.log("Applying policy");
 	httpsURL = "https://" + domain + "/*";
 	httpURL = "http://" + domain + "/*";
 	chrome.contentSettings.cookies.set({primaryPattern: httpsURL, 
@@ -28,8 +30,10 @@ async function applyPolicy(domain, policy) {
 		let cookies_http = await chrome.cookies.getAll({url: httpURL});
 		let cookies = cookies_https.concat(cookies_http);
 		cookies.map((cookie) => {
-			chrome.cookies.remove({storeId: cookie.storeId});
-			// url:, cookie.name
+			chrome.cookies.remove({storeId: cookie.storeId, name: cookie.name,
+				url: "https://" + cookie.domain + cookie.path});
+			chrome.cookies.remove({storeId: cookie.storeId, name: cookie.name,
+				url: "http://" + cookie.domain + cookie.path});
 		});
 	}
 }

@@ -1,12 +1,32 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<!-- **TODO** fix css-->
+		<style>
+		.list {
+	   		margin-bottom: 1em;
+	   		font-size: 1.4em;
+		}
+		.domainPolicy {
+			display: flex;
+			max-width: 400px;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			margin-bottom: 0.3em;	
+		}
+		select {
+			margin-right: 0%;
+			margin-left: auto;
+		}
+		</style>
+	</head>
 	<body>
 		<h1>Allow from:</h1>
-		<p id="allow"></p>
+		<div class="list" id="allow"></div>
 		<h1>Delete after exit:</h1>
-		<p id="session_only"></p>
+		<div class="list" id="session_only"></div>
 		<h1>Block from:</h1>
-		<p id="block"></p>
+		<div class="list" id="block"></div>
 		<button id="apply">Apply Changes</button>
 		<button id="reset">Reset</button>
 		<script src="shared.js"></script>

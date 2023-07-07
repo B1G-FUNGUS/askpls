@@ -1,25 +1,48 @@
-function refresh() {
-	let allows = document.getElementById("allow");
-	let deletes = document.getElementById("session_only");
-	let blocks = document.getElementById("block");
+function appendList(domain, policy) {
+	let list = document.getElementById(policy);
+	let domainPolicy = document.createElement("div");
+	domainPolicy.classList.add("domainPolicy");
+	domainPolicy.innerHTML = domain;
+	list.append(domainPolicy);
+	let dropdown = document.createElement("select");
+	dropdown.id = domain;
+	dropdown.innerHTML = "<option value='allow'>Allow</option>" +
+		"<option value='session_only'>Session Only</option>" +
+		"<option value='block'>Block</option>" +
+		"<option value='default'>Default</option>";
+	dropdown.value = policy;
+	domainPolicy.append(dropdown);
+}
+
+async function redraw() {
 	policies = await chrome.storage.local.get(["allow", "session_only", 
 		"block"]);
-	policies.allow.map(domain => allows.innerHTML += domain + "<br>");
-	policies.session_only.map(domain => deletes.innerHTML += domain + "<br>");
-	policies.block.map(domain => blocks.innerHTML += domain + "<br>");
+	policies.allow.map(domain => appendList(domain, "allow"));
+	policies.session_only.map(domain => appendList(domain, "session_only"));
+	policies.block.map(domain => appendList(domain, "block"));
 }
 
-document.getElementById("reset").addEventListener(async () => {
+document.getElementById("reset").addEventListener("mouseup", async () => {
 	chrome.contentSettings.cookies.clear({});
 	await initStorage();
-	refresh();
-}
+	document.querySelectorAll(".list").forEach(element => 
+		element.innerHTML = "");
+});
 
-async function listSets() {
-	let urls = document.getElementById("urls");
-	let setlist = await getStored();
-	setlist.map(url => urls.innerHTML += url + "<br>");
-	let resetB = document.getElementById("reset");
-	resetB.addEventListener("mouseup", reset);
-}
-listSets();
+document.getElementById("apply").addEventListener("mouseup", async () => {
+	let toWrites = {};
+	toWrites["allow"] = [];
+	toWrites["session_only"] = [];
+	toWrites["block"] = [];
+	document.querySelectorAll("select").forEach((domainPolicy) => {
+		let domain = domainPolicy.id;
+		let policy = domainPolicy.value;
+		if (policy != "default") toWrites[policy].push(domain);
+	});
+	await chrome.storage.local.set(toWrites);
+	document.querySelectorAll(".list").forEach(element => 
+		element.innerHTML = "");
+	redraw();
+});
+
+redraw();
