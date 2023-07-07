@@ -55,3 +55,6 @@ software is pending to be licensed.
    will not get a prompt when you go to that tab with that domain next time
   - neither of these are problems if your default is "session only," which I
     reccomend for use with this program
+
+- setPolicy has some problems if it's called multiple times at once, as it will
+  read and write asynchronously
