@@ -14,8 +14,8 @@ software is pending to be licensed.
 # TODO
 
 - update css
- - darkmode
- - universal css sheet
+	- darkmode
+	- universal css sheet
 
 - Load settings into memory to read and write from, and only write to storage
   occasionally
@@ -32,23 +32,22 @@ software is pending to be licensed.
 
 - intermittent issues with connection, activeDomain not being set, pop-up being
   marked as enabled but not being able to be opened on valid sites
- - some of these issues might already be fixed, hard to tell
+	- some of these issues might already be fixed, hard to tell
 
 - This program can't create OR remove whitelists/blacklists that are specific
   to subdomains, so if you have a pre-existing cookie filters with subdomains
   there will be some minor issues
 
-- """"random"""" failure to establish connection
- - fixed with await on `popup.js:18`? can't tell b/c issue is intermittent
 
 - cookie being already set issues:
- - you should clear all your cookies before using this extension b/c otherwise
-   it prompts you only when new cookies are set
- - if a cookie is set by a domain in a background tab, but then the user closes
-   the browser before you set a policy? the wait-list was in memory, so you
-   will not get a prompt when you go to that tab with that domain next time
-  - neither of these are problems if your default is "session only," which I
-    reccomend for use with this program
+	- you should clear all your cookies before using this extension b/c
+	  otherwise it prompts you only when new cookies are set
+	- if a cookie is set by a domain in a background tab, but then the user
+	  closes the browser before you set a policy? the wait-list was in
+	  memory, so you will not get a prompt when you go to that tab with
+	  that domain next time
+	- neither of these are problems if your default is "session only,"
+	  which I reccomend for use with this program
 
 - setPolicy has some problems if it's called multiple times at once, as it will
   read and write asynchronously
