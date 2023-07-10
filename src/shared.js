@@ -1,8 +1,5 @@
 // inits/resets the storage
 async function initStorage() {
-	// Need to await so we don't do anything before storage is initialized (?)
-	// TODO I don't think adding a string to each array is necessary, but I get
-	// errors in getPolicy about the arrays being undefined otherwise
 	await chrome.storage.local.set({allow: [], session_only: [], block: []});
 }
 
@@ -18,7 +15,6 @@ async function getPolicy(domain) {
 
 // apply's a policy by setting it in the chrome settings
 async function applyPolicy(domain, policy) {
-	// console.log("Applying policy");
 	httpsURL = "https://" + domain + "/*";
 	httpURL = "http://" + domain + "/*";
 	chrome.contentSettings.cookies.set({primaryPattern: httpsURL, 

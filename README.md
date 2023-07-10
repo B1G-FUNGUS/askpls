@@ -11,23 +11,16 @@ https://github.com/publicsuffix/list, and is licensed under the Mozilla Public
 License Version 2.0, which can be found in 'LIST_LICENSE.txt.' The rest of this
 software is pending to be licensed.
 
-# Changelog 
-
 # TODO
 
 - update css
+ - darkmode
+ - universal css sheet
 
 - Load settings into memory to read and write from, and only write to storage
   occasionally
 
 - Add badge indicating cookie policy on a site?
-
-- Add auto-refresh to options page
-
-- Path to 1.0:
-	1. Testing and final bug-crushing soon
-
-- Add 48x48 icon?
 
 - Add license
 
@@ -35,17 +28,18 @@ software is pending to be licensed.
   speed/storage, but those resources are barely used as is)
 	- Add IP addr pattern match
 
-- Script to update & compile regex suffix list
-
-- Catch domain exceptions better
-
 # Known Issues
+
+- intermittent issues with connection, activeDomain not being set, pop-up being
+  marked as enabled but not being able to be opened on valid sites
+ - some of these issues might already be fixed, hard to tell
 
 - This program can't create OR remove whitelists/blacklists that are specific
   to subdomains, so if you have a pre-existing cookie filters with subdomains
   there will be some minor issues
 
-- Plenty of unhandled exceptions :D (even less now!)
+- """"random"""" failure to establish connection
+ - fixed with await on `popup.js:18`? can't tell b/c issue is intermittent
 
 - cookie being already set issues:
  - you should clear all your cookies before using this extension b/c otherwise

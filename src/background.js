@@ -16,8 +16,9 @@ importScripts("shared.js");
 	let suffix_match = new RegExp(text.substring(0,text.length-1));
 
 	let waiting = [];
-	let activeTab = null;
-	let activeDomain = null;
+	let startTab = await chrome.tabs.query({active: true,
+		lastFocusedWindow: true});
+	let activeTab = startTab[0].tabId;
 	let popupOpen = false;
 
 	// get the root domain of a domain
@@ -31,8 +32,6 @@ importScripts("shared.js");
 	async function getActiveRoot() {
 		let [tab] = await chrome.tabs.query({active: true,
 				lastFocusedWindow: true});
-		// TODO from my testing this works when your homepage is a website, but
-		// it might not
 		// TODO not using try-catch for these expections b/c then a) the
 		// exceptions we *want* to handle are not clear, and b) neither are the
 		// errors that we don't
@@ -41,37 +40,39 @@ importScripts("shared.js");
 		return getRoot(host);
 	}
 
+	// initializng activeDomain so it doesn't equal null on a valid website
+	let activeDomain = await getActiveRoot();
+	if (activeDomain == null) chrome.action.disable(activeTab);
+
 	// check the waitlist for the active tab's root domain; if it's there then
 	// open the popup
 	async function checkWaiting() {
-		// console.log("Checking waitlist");
 		activeDomain = await getActiveRoot();
-		if(activeDomain == null) return;
+		if (activeDomain == null) { 
+			console.log(activeDomain + " disabled");
+			chrome.action.disable(activeTab);
+			return;
+		}
+		console.log(activeDomain + " enabled");
+		chrome.action.enable(activeTab);
 		domainIndex = waiting.indexOf(activeDomain);
-		if (domainIndex != -1) {
-			if (!popupOpen) {
-				// console.log("Prompting user");
-				popupOpen = true;
-				chrome.action.openPopup();
-			} else {
-				// console.log("Popup is already open");	
-			}
+		if (domainIndex != -1 && !popupOpen) {
+			popupOpen = true;
+			chrome.action.openPopup();
 		}
 	}
 
 	// following 2 listeners: check waiting list when active tab is changed or
 	// active tab is updated
 	chrome.tabs.onActivated.addListener((info) => {
-		// console.log("Active tab changed");
 		activeTab = info.tabId;
 		checkWaiting();
 	});
 
 	chrome.tabs.onUpdated.addListener((tabId) => {
-		// TODO we might want to pass the url we can get from this listener
-		// directly to the lambda, but I don't foresee any problems currently
+		// TODO we could pass the url from this listener, but I don't see a
+		// reason to
 		if (activeTab == tabId) {
-			// console.log("Active tab updated");
 			checkWaiting();
 		}
 	});
@@ -81,7 +82,6 @@ importScripts("shared.js");
 		let cdomain = getRoot(changes.cookie.domain);
 		if (!changes.removed && await getPolicy(cdomain) == null && 
 			waiting.indexOf(cdomain) == -1) { 
-			// console.log("New cookie set");
 			waiting.push(cdomain);
 			checkWaiting();
 		}
@@ -92,22 +92,18 @@ importScripts("shared.js");
 	// connection w/ the popup
 	chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
 		if (msg.request == "getActive") {
-			// TODO technically active domain should never be null since
-			// everything that can lead to openPopup() being called (and thus
-			// this hook being called) should set the active domain
-			if (activeDomain == null) {
-				sendResponse({domain: await getActiveRoot()});
-			} else {
-				sendResponse({domain: activeDomain});
-				// activeDomain = null; TODO why did i ever do this?
-			}
+			// if (activeDomain == null) activeDomain = await getActiveRoot();
+			sendResponse({domain: activeDomain});
 		} else {
 			waiting.splice(waiting.indexOf(msg.request), 1);
 		}
 	});
 
+	// tell application when popup is closed
 	chrome.runtime.onConnect.addListener((port) => {
+		console.log("connected");
 		port.onDisconnect.addListener(() => {
+			console.log("disconnected");
 			popupOpen = false;
 		});
 	});

@@ -15,13 +15,11 @@ async function setPolicy(domain, policy) {
 
 
 (async () => {
-	chrome.runtime.connect({name: "popup-background"});
+	await chrome.runtime.connect({name: "popup-background"});
 	let response = await chrome.runtime.sendMessage({request: "getActive"});
 	let rootDomain = response.domain;
-	// console.log(rootDomain);
 	document.getElementById("root domain").innerHTML = rootDomain;
 	let policy = await getPolicy(rootDomain);
-	// console.log(policy);
 	if (policy != null) document.getElementById(policy).disabled = true;
 	function bupdate() {
 		if (policy != null) document.getElementById(policy).disabled = false;
