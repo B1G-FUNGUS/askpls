@@ -32,7 +32,8 @@ software is pending to be licensed.
 
 - intermittent issues with connection, activeDomain not being set, pop-up being
   marked as enabled but not being able to be opened on valid sites
-	- some of these issues might already be fixed, hard to tell
+	- though not always the cause, opening up a new browser window seems to
+	  always lead to this.
 
 - This program can't create OR remove whitelists/blacklists that are specific
   to subdomains, so if you have a pre-existing cookie filters with subdomains
